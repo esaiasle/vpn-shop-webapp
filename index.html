@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0B1022">
+<title>فروشگاه کانفیگ VPN</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;padding:24px 16px;min-height:100vh;
+  background:radial-gradient(circle at top,#25245b 0,#0B1022 48%);
+  color:#fff;font-family:Tahoma,Arial,sans-serif
+}
+.header{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.logo{
+  width:60px;height:60px;border-radius:19px;display:grid;
+  place-items:center;font-size:30px;
+  background:linear-gradient(135deg,#7770F5,#37358F);
+  box-shadow:0 0 25px #635BFF55
+}
+h1{font-size:20px;margin:0 0 8px}
+.subtitle{color:#B8B9E8;font-size:13px}
+.panel{
+  background:#151832;border:1px solid #373765;
+  border-radius:23px;padding:19px;
+  box-shadow:0 12px 35px #0003
+}
+h2{font-size:16px;margin:0 0 18px}
+.buttons{display:grid;gap:12px}
+button{
+  width:100%;border:1px solid #827AFF;
+  border-radius:15px;padding:16px 12px;color:white;
+  font-size:15px;font-weight:bold;font-family:inherit;
+  cursor:pointer;
+  background:linear-gradient(135deg,#6259E8,#4840B2);
+  box-shadow:0 5px 18px #5149C833;
+  transition:transform .15s,filter .15s
+}
+button:active{transform:scale(.98);filter:brightness(1.2)}
+.hidden{display:none!important}
+.back{
+  background:linear-gradient(135deg,#292B59,#202243);
+  border-color:#484A80;box-shadow:none
+}
+.note{
+  text-align:center;color:#A9ACD5;font-size:12px;
+  line-height:2;margin-top:20px
+}
+.price{
+  margin-top:14px;padding:14px;border-radius:14px;
+  background:#202247;color:#E1DFFF;text-align:center;
+  font-size:13px;line-height:2
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="logo">🛡️</div>
+  <div>
+    <h1>فروشگاه کانفیگ VPN</h1>
+    <div class="subtitle">خرید آسان و سریع کانفیگ</div>
+  </div>
+</header>
+
+<main class="panel">
+  <section id="home">
+    <h2>خوش اومدی ❤️</h2>
+    <div class="buttons">
+      <button onclick="showPage('plans')">💎 خرید کانفیگ</button>
+      <button onclick="showPage('support')">🎧 پشتیبانی</button>
+    </div>
+  </section>
+
+  <section id="plans" class="hidden">
+    <h2>مدت پلن رو انتخاب کن</h2>
+    <div class="buttons">
+      <button onclick="showPage('users')">📦 پلن یک‌ماهه</button>
+      <button onclick="showPage('home')" class="back">↩️ بازگشت</button>
+    </div>
+  </section>
+
+  <section id="users" class="hidden">
+    <h2>تعداد کاربران رو انتخاب کن</h2>
+    <div class="buttons">
+      <button onclick="chooseUsers(1)">👤 یک کاربر</button>
+      <button onclick="chooseUsers(2)">👥 دو کاربر</button>
+      <button onclick="chooseUsers(3)">👨‍👩‍👧 سه کاربر</button>
+      <button onclick="showPage('plans')" class="back">↩️ بازگشت</button>
+    </div>
+  </section>
+
+  <section id="volumes" class="hidden">
+    <h2 id="volumeTitle">حجم اینترنت رو انتخاب کن</h2>
+    <div class="buttons">
+      <button onclick="selectPlan(30)">📦 ۳۰ گیگابایت</button>
+      <button onclick="selectPlan(50)">📦 ۵۰ گیگابایت</button>
+      <button onclick="selectPlan(70)">📦 ۷۰ گیگابایت</button>
+      <button onclick="selectPlan(100)">📦 ۱۰۰ گیگابایت</button>
+      <button onclick="showPage('users')" class="back">↩️ بازگشت</button>
+    </div>
+    <div id="result" class="price hidden"></div>
+  </section>
+
+  <section id="support" class="hidden">
+    <h2>🎧 پشتیبانی فروشگاه</h2>
+    <p class="subtitle">برای راهنمایی درباره سفارش با پشتیبانی تماس بگیر.</p>
+    <button onclick="showPage('home')" class="back">↩️ بازگشت</button>
+  </section>
+</main>
+
+<div class="note">
+  🛡️ انتخاب پلن دلخواه<br>
+  پرداخت و تحویل طبق راهنمای فروشگاه
+</div>
+
+<script>
+let selectedUsers=1;
+
+function showPage(page){
+  document.querySelectorAll('main section').forEach(s=>{
+    s.classList.add('hidden');
+  });
+  document.getElementById(page).classList.remove('hidden');
+}
+
+function chooseUsers(count){
+  selectedUsers=count;
+  document.getElementById('volumeTitle').textContent=
+    'انتخاب حجم برای '+count+' کاربر';
+  document.getElementById('result').classList.add('hidden');
+  showPage('volumes');
+}
+
+function selectPlan(gb){
+  const plan={users:selectedUsers,volume:gb,duration:1};
+  const result=document.getElementById('result');
+  result.innerHTML=
+    'پلن انتخاب‌شده: '+plan.users+' کاربر<br>'+
+    'حجم: '+plan.volume+' گیگابایت<br>'+
+    'مدت: یک ماه<br><br>'+
+    'برای ثبت سفارش، ادامه فرایند را در ربات انجام بده.';
+  result.classList.remove('hidden');
+
+  if(window.Telegram && window.Telegram.WebApp){
+    Telegram.WebApp.HapticFeedback.impactOccurred('light');
+  }
+  console.log('پلن انتخاب‌شده:',plan);
+}
+
+if(window.Telegram && window.Telegram.WebApp){
+  Telegram.WebApp.ready();
+  Telegram.WebApp.expand();
+}
+</script>
+</body>
+</html>
